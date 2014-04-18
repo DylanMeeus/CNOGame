@@ -1,44 +1,40 @@
-package net.itca.game.elements;
+package net.itca.game.elements.fruit;
 
-import java.util.Random;
+import net.itca.game.elements.MovingGameElement;
 
 import com.codename1.ui.Image;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.util.Resources;
-
 
 /**
  * 
  * @author Dylan
  *
  */
-public class Cloud extends MovingGameElement
+public class Pear extends MovingGameElement
 {
 	private Resources r;
 	private Image im;
 	private Point position;
 	private Point velocity;
-	private int value = 0;
+	private int value = 15;
 	private boolean isAlive;
 	
-	public Cloud(Point startPosition)
+	public Pear(Point startPosition)
 	{
 		try
 		{
-		r = Resources.open("/theme.res");
+			r = Resources.open("/theme.res");
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		im = r.getImage("white-cloud.png");
+		im = r.getImage("banana.png");
 		setPosition(startPosition);
-		Random rand = new Random();
-		int xVel = rand.nextInt(2)+1; // +1 to avoid 0
-		velocity = new Point(xVel,0);
+		velocity = new Point(0,4);
 		isAlive = true;
 	}
-	
 	
 	@Override
 	public Image getElementImage()

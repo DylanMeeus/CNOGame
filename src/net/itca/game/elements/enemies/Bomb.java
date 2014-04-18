@@ -1,6 +1,6 @@
-package net.itca.game.elements;
+package net.itca.game.elements.enemies;
 
-import java.util.Random;
+import net.itca.game.elements.MovingGameElement;
 
 import com.codename1.ui.Image;
 import com.codename1.ui.geom.Point;
@@ -12,16 +12,17 @@ import com.codename1.ui.util.Resources;
  * @author Dylan
  *
  */
-public class Cloud extends MovingGameElement
+public class Bomb extends MovingGameElement
 {
-	private Resources r;
-	private Image im;
-	private Point position;
-	private Point velocity;
-	private int value = 0;
-	private boolean isAlive;
+
+	Resources r;
+	Image im;
+	Point position;
+	Point velocity;
+	int value = -1; // Value for BOMB
+	boolean isAlive;
 	
-	public Cloud(Point startPosition)
+	public Bomb(Point startPos, Point startVel)
 	{
 		try
 		{
@@ -31,14 +32,11 @@ public class Cloud extends MovingGameElement
 		{
 			ex.printStackTrace();
 		}
-		im = r.getImage("white-cloud.png");
-		setPosition(startPosition);
-		Random rand = new Random();
-		int xVel = rand.nextInt(2)+1; // +1 to avoid 0
-		velocity = new Point(xVel,0);
+		im = r.getImage("bomb.png");
+		setPosition(startPos);
+		velocity = startVel;
 		isAlive = true;
 	}
-	
 	
 	@Override
 	public Image getElementImage()

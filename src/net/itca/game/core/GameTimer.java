@@ -7,9 +7,16 @@ import java.util.TimerTask;
 import net.itca.game.interfaces.Observable;
 import net.itca.game.interfaces.Observer;
 
+
+/**
+ * Timer to control the updating of the game's logic.
+ * Updates all elements (Set one step forward in the 'time' of the game (e.g: move objects according to their velocity))
+ * @author Dylan
+ *
+ */
 public class GameTimer implements Observable
 {
-	ArrayList<Observer> observers = new ArrayList<Observer>();
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	public GameTimer()
 	{
 		System.out.println("test");
@@ -26,6 +33,7 @@ public class GameTimer implements Observable
 		
 	}
 
+	
 	public void registerObserver(Observer o)
 	{
 		observers.add(o);
@@ -38,9 +46,12 @@ public class GameTimer implements Observable
 
 	public void notifyObservers()
 	{
-		for(Observer o : observers)
+		synchronized(this)
 		{
-			o.update();
+			for(Observer o : observers)
+			{
+				o.update();
+			}
 		}
 	}
 	

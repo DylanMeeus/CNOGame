@@ -5,9 +5,9 @@ import com.codename1.ui.geom.Point;
 
 
 /**
- * 
+ * Defines an element of the game.
  * @author Dylan
- * Class layout for game elements.
+ * 
  */
 public abstract class GameElement
 {

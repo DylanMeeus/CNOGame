@@ -1,9 +1,10 @@
 package net.itca.game.display;
 
+import net.itca.components.TrialButton;
 import net.itca.game.controllers.GameAreaController;
 import net.itca.game.core.Game;
 import net.itca.game.core.GameTimer;
-import net.itca.game.tryouts.TrialButton;
+import net.itca.game.interfaces.Observer;
 
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
@@ -18,29 +19,48 @@ import com.codename1.ui.layouts.GridLayout;
 /**
  * 
  * @author Dylan
- * The main window with all game components
+ * The main window with all game components, this class also listens to the game to find out when the game's over.
  */
-public class GameWindow extends Form
+public class GameWindow extends Form implements Observer
 {
-
-	GameArea ga;
-	Container content;
-	GameTimer timer;
-	TrialButton left,right;
-	Game game;
-	GameAreaController gameAreaController;
+	private GameArea ga;
+	private Container content;
+	private GameTimer timer;
+	private TrialButton left,right;
+	private Game game;
+	private GameAreaController gameAreaController;
+	
 	public GameWindow(Game g)
 	{
 		game = g;
+		game.registerObserver(this);
 		this.setBackCommand(back);
-		setup();
-		this.setDraggable(false);
 		BorderLayout b = new BorderLayout();
 		b.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER);
-		this.setLayout(b);		
-		this.addComponent(b.CENTER,content);
+		this.setLayout(b);	
+		setup();
+		this.setDraggable(false);
+			
+		this.addComponent(b.SOUTH,content);
+	
+		this.setScrollable(false);
+		content.setScrollable(false);
+		content.setDraggable(false);
+		
+		
+		this.addPointerDraggedListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				System.out.println(evt.getX());
+				System.out.print(" y: " + evt.getY());
+			}
+		});
 	}
 	
+	/**
+	 * Setup of the gamewindow's content container. Get's called by the constructor.
+	 */
 	public void setup()
 	{
 		content = new Container();
@@ -52,7 +72,7 @@ public class GameWindow extends Form
 		BorderLayout b = new BorderLayout();
 		b.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER);
 		content.setLayout(b);
-		content.addComponent(b.CENTER,ga);
+		this.addComponent(b.CENTER,ga);
 		
 		
 		// Button panel
@@ -86,7 +106,9 @@ public class GameWindow extends Form
 	}
 	
 	Command back = new Command("Back")
-	{
+	{	
+		// We need to show an end form before exiting the game - microsoft store rules 
+		// We need to ask the user if he's sure he wants to quit.
 		public void actionPerformed(ActionEvent ev)
 		{
 			// Show popup to ask if they are sure!
@@ -95,4 +117,22 @@ public class GameWindow extends Form
 			mm.showBack();
 		}
 	};
+	
+	public void update()
+	{
+		// If the game is over, start the endgame sequence
+		if(game.getGameOver())
+		{
+			synchronized(this)
+			{
+				System.out.println("Testing the gameOver method");
+				timer.removeObserver(game);
+				timer = null;
+				game.removeObserver(this); 
+				EndWindow ew = new EndWindow(game.getScore());
+				game = null; // remove a reference to the game, thus all other objects on the heap related to it.
+				ew.show();
+			}
+		}		
+	}
 }

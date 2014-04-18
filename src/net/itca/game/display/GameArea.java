@@ -8,31 +8,36 @@ import net.itca.game.interfaces.Observer;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 
+
+
 /**
- * 
+ * Controls the drawing of elements to the screen. 
  * @author Dylan
- * Does all the drawings
  */
-
-
 public class GameArea extends Form implements Observer
 {
 
-	Resources resource;
-	Form thisForm = this;
-	GameAreaController gameAreaController;
+	private Resources resource;
+	private Form thisForm = this;
+	private GameAreaController gameAreaController;
+	
 	public GameArea(GameAreaController gac)
 	{
 		gameAreaController = gac;
+		Display display = Display.getInstance();
 		this.setSize(new Dimension(400,400));
 		gameAreaController.createPlayer(new Point(this.getWidth()/2,this.getHeight()));
 		gameAreaController.setScreenDimensions(this.getWidth(), this.getHeight());
@@ -42,17 +47,21 @@ public class GameArea extends Form implements Observer
 		} 
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Image im = resource.getImage("background.png");
-		Label l = new Label(im);
+		Image im2 = resource.getImage("slowmotionOverlay.png");
+		Label l = new Label(im2);
+
 		l.setDraggable(false);
-		
+		l.setVisible(false);
+		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+		this.setBgImage(im);
 		this.addComponent(l);
 		this.setDraggable(false);
-		
+		this.setScrollable(false);
 		repaint();
+		
 	}
 	
 	
@@ -63,17 +72,16 @@ public class GameArea extends Form implements Observer
 	{
 		super.paint(g);
 		requestFocus();
-		try 
-		{
-			resource = Resources.open("/theme.res");
-			Image im = resource.getImage("background.png");
-			g.drawImage(im, 0, 0, this.getWidth(), this.getHeight());
-		} 
-		catch (IOException ex)
-		{
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
+//		try 
+//		{
+//			resource = Resources.open("/theme.res");
+//			Image im = resource.getImage("background.png");
+//			g.drawImage(im, 0, 0, this.getWidth(), this.getHeight());
+//		} 
+//		catch (IOException ex)
+//		{
+//			ex.printStackTrace();
+//		}
 		
 		// Draw player
 		g.drawImage(gameAreaController.getPlayer().getElementImage(), gameAreaController.getPlayer().getPosition().getX(), gameAreaController.getPlayer().getPosition().getY());
@@ -86,8 +94,8 @@ public class GameArea extends Form implements Observer
 				g.drawImage(ge.getElementImage(),ge.getPosition().getX(),ge.getPosition().getY());
 			}
 		}
-		
 		// Draw score
+		g.setColor(0xFFFFFF);
 		g.drawString(Integer.toString(gameAreaController.getScore()), this.getWidth()/2, 50);
 	}
 	

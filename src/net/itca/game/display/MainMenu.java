@@ -10,12 +10,19 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.GridLayout;
+import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 
+
+/**
+ * Main menu of the game.
+ * @author Dylan
+ *
+ */
 public class MainMenu extends Form
 {
-	Container content;
-	Button Start, About, Settings, Info;
+	private Container content;
+	private Button Start, About, Settings, Info;
 	public MainMenu()
 	{
 		setup();
@@ -26,6 +33,7 @@ public class MainMenu extends Form
 		{
 		Resources r = Resources.open("/theme.res");
 		Image im = r.getImage("background.png");
+		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
 		this.setBgImage(im);
 		}
 		catch(Exception ex)
@@ -35,6 +43,9 @@ public class MainMenu extends Form
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public void setup()
 	{
 		content = new Container();
@@ -59,7 +70,8 @@ public class MainMenu extends Form
 
 			public void actionPerformed(ActionEvent evt)
 			{
-				
+				InfoWindow iw = new InfoWindow();
+				iw.show();
 			}
 			
 		});
@@ -91,9 +103,7 @@ public class MainMenu extends Form
 			
 		});
 		content.addComponent(About);
-		
-		
-		
+	
 		
 	}
 }

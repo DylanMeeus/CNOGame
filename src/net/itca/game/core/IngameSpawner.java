@@ -4,10 +4,10 @@ import java.util.Random;
 
 import com.codename1.ui.geom.Point;
 
-import net.itca.game.elements.Apple;
-import net.itca.game.elements.Banana;
 import net.itca.game.elements.GameElement;
-import net.itca.game.elements.Pear;
+import net.itca.game.elements.fruit.Apple;
+import net.itca.game.elements.fruit.Banana;
+import net.itca.game.elements.fruit.Pear;
 
 
 /**
@@ -24,9 +24,9 @@ public class IngameSpawner
 	}
 	
 	/**
-	 * 
+	 * Creates a gameelement at a random width
 	 * @param width
-	 * @return GameElement at random width
+	 * @return GameElement
 	 */
 	public GameElement getRandomElement(int param)
 	{

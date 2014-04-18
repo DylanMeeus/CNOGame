@@ -13,25 +13,38 @@ import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
+import com.codename1.ui.Image;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.util.Resources;
 
-public class EndWindow extends Form
+
+/**
+ * Window to be displayed when the game is over.
+ * @author Dylan
+ *
+ */
+public class EndWindow extends BaseWindow
 {
-	Container content;
-	Form thisForm = this;
-	String score;
-	ArrayList<Cloud> clouds;
-	int cloudSpawnCycles = 150;
-	int Cycles = 0;
-	Timer timer;
+	private Container content;
+	private Form thisForm = this;
+	private String score;
+	private ArrayList<Cloud> clouds;
+	private int cloudSpawnCycles = 150;
+	private int Cycles = 0;
+	private Timer timer;
+	
 	public EndWindow(int score)
 	{
 		// Setting a radial background with gradiant from white -> blue
-		this.getStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
-		this.getStyle().setBackgroundGradientStartColor(0x0000CC);
-		this.getStyle().setBackgroundGradientEndColor(0x0000AA);
+		//this.getStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
+		//this.getStyle().setBackgroundGradientStartColor(0x0000CC);
+		//this.getStyle().setBackgroundGradientEndColor(0x0000AA);
+		
+		
+		super();
+		
 		clouds = new ArrayList<Cloud>();
 		setup();
 		this.score = Integer.toString(score);		
@@ -66,11 +79,13 @@ public class EndWindow extends Form
 			
 		}, 0, 1000/60); // 60FPS
 		
-		// set the back command to open the main menu
-		
 		this.setBackCommand(back);
+		
 	}
 	
+	/**
+	 * Spawns a new cloud
+	 */
 	public void spawnCloud()
 	{
 		// Perform a cleanup before spawning
@@ -84,6 +99,9 @@ public class EndWindow extends Form
 		}
 	}
 	
+	/**
+	 * Cleans up the objects whom have isAlive set to false.
+	 */
 	public void memoryCleanup()
 	{
 
@@ -101,25 +119,36 @@ public class EndWindow extends Form
 		
 		clouds = newClouds;
 		newClouds = null;
+		
 	}
 	
+	/**
+	 * 
+	 */
 	public void setup()
 	{
 		content = new Container();
 	}
 	
+	/**
+	 * 
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
 		super.requestFocus();
-		g.drawString("GAME", 10, 20);
-		g.drawString("OVER", 20, 50);
 		
-		synchronized(clouds)
+		g.setColor(0xFF0000);
+		g.drawString("GAME OVER", this.getWidth()/2, this.getHeight()/2);
+		
+		if(clouds!=null)
 		{
-			for(Cloud cloud : clouds)
+			synchronized(clouds)
 			{
-				g.drawImage(cloud.getElementImage(), cloud.getPosition().getX(), cloud.getPosition().getY());
+				for(Cloud cloud : clouds)
+				{
+					g.drawImage(cloud.getElementImage(), cloud.getPosition().getX(), cloud.getPosition().getY());
+				}
 			}
 		}
 	}
@@ -128,10 +157,16 @@ public class EndWindow extends Form
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
+			synchronized(this)
+			{
 			timer.cancel();
-			timer = null;
 			MainMenu mm = new MainMenu();
+			clouds = null;
+			content = null;
+			score = null;
+			timer = null;
 			mm.showBack();
+			}
 		}
 	};
 }

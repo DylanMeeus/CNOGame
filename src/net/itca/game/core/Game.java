@@ -2,36 +2,46 @@ package net.itca.game.core;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
 
 import com.codename1.ui.geom.Point;
 
 import net.itca.game.display.EndWindow;
-import net.itca.game.elements.Apple;
-import net.itca.game.elements.Banana;
-import net.itca.game.elements.Bomb;
 import net.itca.game.elements.GameElement;
 import net.itca.game.elements.MovingGameElement;
-import net.itca.game.elements.Pear;
 import net.itca.game.elements.Player;
+import net.itca.game.elements.enemies.Bomb;
 import net.itca.game.factories.GameElementFactory;
+import net.itca.game.interfaces.Observable;
 import net.itca.game.interfaces.Observer;
 
-public class Game implements Observer
+
+/**
+ * 
+ * Main 'model' class, controlling the game's functions.
+ * Can be thought of as the "engine" of the game.
+ * @author Dylan
+ */
+
+//TODO: seperate timer for game logic.
+public class Game implements Observer, Observable
 {
-	ArrayList<GameElement> gameElements;
-	Player player;
-	long spawnCycles;
-	long currentCycles;
-	long bombSpawnCycles;
-	long powerupCycles;
-	int level;
-	int score;
-	int gaWidth; // gameArea width
-	int gaHeight; // gameArea height
-	IngameSpawner spawner;
+	private ArrayList<Observer> observers;
+	private ArrayList<GameElement> gameElements;
+	private Player player;
+	private long spawnCycles;
+	private long currentCycles;
+	private long bombSpawnCycles;
+	private long powerupCycles;
+	private int level;
+	private int score;
+	private int gaWidth; // gameArea width
+	private int gaHeight; // gameArea height
+	private int bombVelocity = 3; // Initial bomb velocity
+	private IngameSpawner spawner;
+	private boolean gameOver = false;
 	public Game()
 	{
+		observers = new ArrayList<Observer>();
 		spawner = new IngameSpawner();
 		gameElements = new ArrayList<GameElement>();
 		level = 1;
@@ -40,28 +50,58 @@ public class Game implements Observer
 		bombSpawnCycles = 150;
 		spawnCycles = 250;
 	}
-
+	
+	
+	/**
+	 * Returns the players score
+	 * @return int
+	 */
 	public int getScore()
 	{
 		return score;
 	}
+	
+	/**
+	 * Returns the gameOver boolean, determining if the game is "updating".
+	 * @return boolean
+	 */
+	public boolean getGameOver()
+	{
+		return gameOver;
+	}
 
+	/**
+	 * Adds a player to the game. 
+	 * @param Player
+	 */
 	public void addPlayer(Player p)
 	{
 		player = p;
 		gameElements.add(p);
 	}
 
+	/**
+	 * Setting the width of the GameArea.
+	 * @param param
+	 */
 	public void setGaWidth(int param)
 	{
 		gaWidth = param;
 	}
-
+	
+	/**
+	 * Setting the height of the GameArea
+	 * @param int
+	 */
 	public void setGaHeight(int param)
 	{
 		gaHeight = param;
 	}
 
+	/**
+	 * Move the player in the given direction.
+	 * @param int
+	 */
 	public void movePlayer(int direction)
 	{
 		switch (direction)
@@ -75,16 +115,28 @@ public class Game implements Observer
 		}
 	}
 
+	/**
+	 * Returns the Player (plant)
+	 * @return Player
+	 */
 	public Player getPlayer()
 	{
 		return player;
 	}
 
+	/**
+	 * Gets the elements which are in the game
+	 * @return ArrayList<GameElement>
+	 */
 	public ArrayList<GameElement> getElements()
 	{
 		return gameElements;
 	}
 
+	/**
+	 * Updates the game. Does one step in 'game'time, all objects change their position according to their velocity and several checks occur for collision detection and 
+	 * endgame. In addition, this method also launches the "Memory Cleaner", to delete objects whom are dead.
+	 */
 	public void update()
 	{
 		currentCycles++;
@@ -117,31 +169,30 @@ public class Game implements Observer
 					if(mge instanceof Bomb)
 					{
 						// endgame
-						EndWindow ew = new EndWindow(score);
-						ew.show();
+						endGameByBomb();
 					}
 					mge.setAlive(false);
 					score += mge.getValue();
 					if(score%100==0)
 					{
 						level++;
-						switch(level)
+						switch(level) // Increase spawnSpeed + bombVelcity (makes the game harder)
 						{
 							case 1: spawnCycles = 150;
 							break;
-							case 2: spawnCycles = 140;
+							case 2: spawnCycles = 140; 
 							break;
-							case 3: spawnCycles = 130;
+							case 3: spawnCycles = 130; bombVelocity = 4;
 							break;
 							case 4: spawnCycles = 120;
 							break;
-							case 5: spawnCycles = 110;
+							case 5: spawnCycles = 110; bombVelocity = 5;
 							break;
 							case 6: spawnCycles = 100;
 							break;
 							case 7: spawnCycles = 90;
 							break;
-							case 8: spawnCycles = 80;
+							case 8: spawnCycles = 80; bombVelocity = 6;
 							break;
 							case 9: spawnCycles = 70;
 							break;
@@ -156,6 +207,23 @@ public class Game implements Observer
 		cleanupGameElements();
 	}
 
+	
+	/**
+	 * Method for ending the game due to beign hit by a bomb. Stops the timer for updating the game, and displays the endwindow. Also makes sure everything is garbage-collectable
+	 */
+	public void endGameByBomb()
+	{
+		gameOver = true;
+		notifyObservers();
+	}
+	
+	
+	/**
+	 * Checks for a collision between a MovingGameElement and a player. Returns true if their positions are overlapping.
+	 * @param mge
+	 * @param p
+	 * @return boolean
+	 */
 	public boolean checkCollision(MovingGameElement mge, Player p)
 	{
 		//
@@ -174,15 +242,21 @@ public class Game implements Observer
 		return overlaps;
 	}
 
+	/**
+	 * Spawns a bomb in the game at a random position.
+	 */
 	public void spawnBomb()
 	{
 		Random rand = new Random();
 		int width = rand.nextInt(gaWidth-50);
-		Bomb bomb = GameElementFactory.createBomb((new Point(width,0)));
+		Bomb bomb = GameElementFactory.createBomb(new Point(width,0), new Point(0,bombVelocity));
 		bomb.setPosition(new Point(bomb.getPosition().getX(),bomb.getPosition().getY()-bomb.getElementImage().getHeight()));
 		gameElements.add(bomb);
 	}
 
+	/**
+	 * Spawns an element in the game at a random position.
+	 */
 	public void spawnElement()
 	{
 		// Synchronized method to avoid threading issues (gameElements is shared MVC object)
@@ -192,6 +266,9 @@ public class Game implements Observer
 		}
 	}
 
+	/**
+	 * Removes elements from the game, where the isAlive variable is set to false
+	 */
 	public void cleanupGameElements()
 	{
 		ArrayList<GameElement> newList = new ArrayList<GameElement>();
@@ -209,6 +286,30 @@ public class Game implements Observer
 
 		gameElements = newList;
 		newList = null;
+	}
+
+
+	public void registerObserver(Observer o)
+	{
+		observers.add(o);
+	}
+
+
+	public void removeObserver(Observer o)
+	{
+		observers.remove(o);
+	}
+
+
+	public void notifyObservers()
+	{
+		synchronized(observers)
+		{
+			for(Observer o : observers)
+			{
+				o.update();
+			}
+		}
 	}
 
 }
