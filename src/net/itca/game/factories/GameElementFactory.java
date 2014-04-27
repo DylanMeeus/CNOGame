@@ -8,6 +8,7 @@ import net.itca.game.elements.enemies.Bomb;
 import net.itca.game.elements.fruit.Apple;
 import net.itca.game.elements.fruit.Banana;
 import net.itca.game.elements.fruit.Pear;
+import net.itca.game.elements.powerups.Shield;
 
 /**
  * Statically accessible factory methods for creating game elements.
@@ -70,5 +71,15 @@ public class GameElementFactory
 	public static Cloud createCloud(Point position)
 	{
 		return new Cloud(position);
+	}
+	
+	/**
+	 * Returns a shield at the given position.
+	 * @param position
+	 * @return Shield
+	 */
+	public static Shield createShield(Point position)
+	{
+		return new Shield(position);
 	}
 }

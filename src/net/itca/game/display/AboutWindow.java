@@ -45,7 +45,7 @@ public class AboutWindow extends BaseWindow
 		Label sean = new Label("Design by: Sean McGee");
 		sean.getStyle().setFgColor(0xFF0000);
 		content.addComponent(sean);
-		Label source = new Label("Made OpenSource and available at: github.com/CNOGame");
+		Label source = new Label("OpenSource and available at: github.com/CNOGame");
 		source.getStyle().setFgColor(0xFF0000);
 		content.addComponent(source);
 		

@@ -52,8 +52,8 @@ public class GameWindow extends Form implements Observer
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				System.out.println(evt.getX());
-				System.out.print(" y: " + evt.getY());
+			//	System.out.println(evt.getX());
+			//	System.out.print(" y: " + evt.getY());
 			}
 		});
 	}

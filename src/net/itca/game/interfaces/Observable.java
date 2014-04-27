@@ -4,12 +4,12 @@ public interface Observable
 {
 	/**
 	 * Add an observer to recieve updates from the observer
-	 * @param o
+	 * @param Observer
 	 */
 	public void registerObserver(Observer o);
 	/**
 	 * Remove an observer from recieving updates from the observer
-	 * @param o
+	 * @param Observer
 	 */
 	public void removeObserver(Observer o);
 	/**

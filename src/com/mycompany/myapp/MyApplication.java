@@ -19,7 +19,7 @@ public class MyApplication
 
 	public void init(Object context)
 	{
-
+	
 	}
 
 	public void start()

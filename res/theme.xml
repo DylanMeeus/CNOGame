@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource majorVersion="1" minorVersion="6" useXmlUI="false">
+    <image name="apple.png"  />
+    <image name="background.png"  />
+    <image name="banana.png"  />
+    <image name="bomb.png"  />
+    <ui name="Main" />
+    <image name="MainmenuBackground.png"  />
+    <image name="Newton.png"  />
+    <image name="pear.png"  />
+    <image name="Shield.png"  />
+    <image name="shieldOver.png"  />
+    <image name="slowmotionOverlay.png"  />
+    <theme name="Theme">
+        <val key="@includeNativeBool" value="true" />
+    </theme>
+    <image name="white-cloud.png"  />
+</resource>

@@ -10,6 +10,7 @@ import net.itca.game.elements.GameElement;
 import net.itca.game.elements.MovingGameElement;
 import net.itca.game.elements.Player;
 import net.itca.game.elements.enemies.Bomb;
+import net.itca.game.elements.powerups.Shield;
 import net.itca.game.factories.GameElementFactory;
 import net.itca.game.interfaces.Observable;
 import net.itca.game.interfaces.Observer;
@@ -39,6 +40,7 @@ public class Game implements Observer, Observable
 	private int bombVelocity = 3; // Initial bomb velocity
 	private IngameSpawner spawner;
 	private boolean gameOver = false;
+	private boolean shielded; // Indicates wether or not the player is protected by a shield.
 	public Game()
 	{
 		observers = new ArrayList<Observer>();
@@ -49,11 +51,12 @@ public class Game implements Observer, Observable
 		currentCycles = 0;
 		bombSpawnCycles = 150;
 		spawnCycles = 250;
+		powerupCycles = 15000; 
 	}
 	
 	
 	/**
-	 * Returns the players score
+	 * Returns the player's score
 	 * @return int
 	 */
 	public int getScore()
@@ -69,6 +72,11 @@ public class Game implements Observer, Observable
 	{
 		return gameOver;
 	}
+	
+	public boolean getShielded()
+	{
+		return shielded;
+	}
 
 	/**
 	 * Adds a player to the game. 
@@ -82,7 +90,7 @@ public class Game implements Observer, Observable
 
 	/**
 	 * Setting the width of the GameArea.
-	 * @param param
+	 * @param int
 	 */
 	public void setGaWidth(int param)
 	{
@@ -150,6 +158,11 @@ public class Game implements Observer, Observable
 		{
 			spawnBomb();
 		}
+		
+		if(currentCycles%powerupCycles==0)
+		{
+			spawnPowerup();
+		}
 		for(GameElement ge : gameElements)
 		{
 			if(ge instanceof MovingGameElement)
@@ -168,15 +181,26 @@ public class Game implements Observer, Observable
 				{
 					if(mge instanceof Bomb)
 					{
-						// endgame
-						endGameByBomb();
+						if(shielded)
+						{
+							shielded = false;
+						}
+						else
+						{
+							endGameByBomb();
+						}
+					}
+					else if(mge instanceof Shield)
+					{
+						shielded = true; // Don't need an if check because it can't yet be true. (Shields don't drop if there is one active)
+						
 					}
 					mge.setAlive(false);
 					score += mge.getValue();
 					if(score%100==0)
 					{
-						level++;
-						switch(level) // Increase spawnSpeed + bombVelcity (makes the game harder)
+						level++; // Higher level = increased difficulty. Steady difficulty at level 10.
+						switch(level) // Increase spawnSpeed + bombVelcity (makes the game harder) 
 						{
 							case 1: spawnCycles = 150;
 							break;
@@ -220,8 +244,8 @@ public class Game implements Observer, Observable
 	
 	/**
 	 * Checks for a collision between a MovingGameElement and a player. Returns true if their positions are overlapping.
-	 * @param mge
-	 * @param p
+	 * @param MovingGameElement
+	 * @param Player
 	 * @return boolean
 	 */
 	public boolean checkCollision(MovingGameElement mge, Player p)
@@ -231,7 +255,7 @@ public class Game implements Observer, Observable
 
 		if (mge.getPosition().getX() < player.getPosition().getX()
 				+ player.getElementImage().getWidth() /* end position */
-				&& mge.getPosition().getX() > player.getPosition().getX()
+				&& mge.getPosition().getX()+mge.getElementImage().getWidth() > player.getPosition().getX()
 				&& mge.getPosition().getY() - mge.getElementImage().getHeight()
 						- 20 > player.getPosition().getY()
 						- player.getElementImage().getHeight())
@@ -260,9 +284,21 @@ public class Game implements Observer, Observable
 	public void spawnElement()
 	{
 		// Synchronized method to avoid threading issues (gameElements is shared MVC object)
+		MovingGameElement mge = spawner.spawnRandomElement(gaWidth-50);
+		if(!(mge instanceof Shield && shielded))
+		{
+			synchronized(gameElements)
+			{
+				gameElements.add(mge);
+			}
+		}
+	}
+	
+	public void spawnPowerup()
+	{
 		synchronized(gameElements)
 		{
-			gameElements.add(spawner.getRandomElement(gaWidth-50));
+			gameElements.add(spawner.spawnRandomPowerup(gaWidth-50));
 		}
 	}
 
@@ -300,6 +336,7 @@ public class Game implements Observer, Observable
 		observers.remove(o);
 	}
 
+	
 
 	public void notifyObservers()
 	{
