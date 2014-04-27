@@ -21,10 +21,12 @@ Update 18/04/2014:
 
 
 
-Update 28/04/2014
+Update 27/04/2014
 
 - Added JavaDoc
 - Added powerups (Shield)
+- Added tile icon
+- Added tile name
 - Improved collision detection
 - Improved spawn logic
 - Improved general code structure/quality
