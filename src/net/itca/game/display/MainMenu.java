@@ -22,7 +22,7 @@ import com.codename1.ui.util.Resources;
 public class MainMenu extends Form
 {
 	private Container content;
-	private Button Start, About, Settings, Info;
+	private Button Start, About, Scores, Info;
 	public MainMenu()
 	{
 		setup();
@@ -33,7 +33,7 @@ public class MainMenu extends Form
 		{
 		Resources r = Resources.open("/theme.res");
 		Image im = r.getImage("background.png");
-		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FIT);
 		this.setBgImage(im);
 		}
 		catch(Exception ex)
@@ -79,15 +79,16 @@ public class MainMenu extends Form
 		
 		
 
-		Settings = new Button("Settings");
-		Settings.addActionListener(new ActionListener()
+		Scores = new Button("Scores");
+		Scores.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				
+				ScoreWindow sw = new ScoreWindow();
+				sw.show();
 			}
 		});
-		content.addComponent(Settings);
+		content.addComponent(Scores);
 		
 		
 		

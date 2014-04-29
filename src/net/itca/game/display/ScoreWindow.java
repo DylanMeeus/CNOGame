@@ -1,37 +1,27 @@
 package net.itca.game.display;
 
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import net.itca.game.elements.Cloud;
 import net.itca.game.factories.GameElementFactory;
+import net.itca.game.tryouts.ScoreContainer;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
-import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.plaf.Style;
-import com.codename1.ui.util.Resources;
 
-
-/**
- * Window to be displayed when the game is over.
- * @author Dylan
- *
- */
-
-//TODO: can use template here (one endwindow, one normal highscore window)
-
-public class EndWindow extends BaseWindow
+public class ScoreWindow extends BaseWindow
 {
+
+	
 	private Container content;
 	private Form thisForm = this;
 	private String score;
@@ -40,7 +30,7 @@ public class EndWindow extends BaseWindow
 	private int Cycles = 0;
 	private Timer timer;
 	
-	public EndWindow(int score)
+	public ScoreWindow()
 	{
 		// Setting a radial background with gradiant from white -> blue
 		//this.getStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
@@ -51,8 +41,7 @@ public class EndWindow extends BaseWindow
 		super();
 		
 		clouds = new ArrayList<Cloud>();
-		setup();
-		this.score = Integer.toString(score);		
+		setup();		
 		
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask()
@@ -141,6 +130,7 @@ public class EndWindow extends BaseWindow
 		Label gameOverlbl = new Label("GAME OVER");
 		gameOverlbl.getStyle().setFgColor(0xFF0000);
 		content.addComponent(contentLayout.NORTH,new Label("GAME OVER"));
+		content.addComponent(contentLayout.CENTER, new ScoreContainer());
 	}
 	
 	/**

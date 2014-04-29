@@ -15,7 +15,7 @@ public class BaseWindow extends Form
 		{
 			Resources r = Resources.open("/theme.res");
 			Image i = r.getImage("background.png");
-			this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+			this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FIT);
 			this.setBgImage(i);
 		}
 		catch(Exception ex)
