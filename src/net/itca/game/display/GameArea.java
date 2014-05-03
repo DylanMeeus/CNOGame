@@ -38,7 +38,7 @@ public class GameArea extends Form implements Observer
 	{
 		gameAreaController = gac;
 		Display display = Display.getInstance();
-		this.setSize(new Dimension(400,400));
+		this.setSize(new Dimension(400,400)); // TODO: Dynamic dimensions!
 		gameAreaController.createPlayer(new Point(this.getWidth()/2,this.getHeight()));
 		gameAreaController.setScreenDimensions(this.getWidth(), this.getHeight());
 		try
@@ -72,17 +72,7 @@ public class GameArea extends Form implements Observer
 	{
 		super.paint(g);
 		requestFocus();
-//		try 
-//		{
-//			resource = Resources.open("/theme.res");
-//			Image im = resource.getImage("background.png");
-//			g.drawImage(im, 0, 0, this.getWidth(), this.getHeight());
-//		} 
-//		catch (IOException ex)
-//		{
-//			ex.printStackTrace();
-//		}
-		
+
 		// Draw player
 		g.drawImage(gameAreaController.getPlayer().getElementImage(), gameAreaController.getPlayer().getPosition().getX(), gameAreaController.getPlayer().getPosition().getY());
 		

@@ -84,4 +84,12 @@ public class GameAreaController
 	{
 		return game.getScore();
 	}
+	
+	/**
+	 * Sets te position to a certain value
+	 */
+	public void setPlayerPosition(int x, int y)
+	{
+		game.getPlayer().setPosition(new Point(x,y));
+	}
 }

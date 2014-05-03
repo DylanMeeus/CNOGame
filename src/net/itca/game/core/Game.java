@@ -24,6 +24,7 @@ import net.itca.game.interfaces.Observer;
  */
 
 //TODO: seperate timer for game logic.
+//TODO: Fix screen rotation + add support for different screen sizes
 public class Game implements Observer, Observable
 {
 	private ArrayList<Observer> observers;
@@ -37,12 +38,13 @@ public class Game implements Observer, Observable
 	private int score;
 	private int gaWidth; // gameArea width
 	private int gaHeight; // gameArea height
-	private int bombVelocity = 3; // Initial bomb velocity
+	private int bombVelocity; // Initial bomb velocity
 	private IngameSpawner spawner;
 	private boolean gameOver = false;
 	private boolean shielded; // Indicates wether or not the player is protected by a shield.
 	public Game()
 	{
+		bombVelocity = 3; // Initial bomb velocity
 		observers = new ArrayList<Observer>();
 		spawner = new IngameSpawner();
 		gameElements = new ArrayList<GameElement>();
@@ -73,6 +75,10 @@ public class Game implements Observer, Observable
 		return gameOver;
 	}
 	
+	/**
+	 * Returns the getShielded boolean. If active, the player can survive a bomb impact.
+	 * @return boolean
+	 */
 	public boolean getShielded()
 	{
 		return shielded;
