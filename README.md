@@ -45,3 +45,9 @@ Update 29/04/2014
 - Fixed minor scaling issue
 - Changed metadata
 - Added XAP file (Windows Phone installation)
+
+Update 03/05/2014
+
+- Added JavaDoc
+- Minor code cleanup
+- Fixed powerup issue
