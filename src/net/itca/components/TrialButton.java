@@ -2,14 +2,13 @@ package net.itca.components;
 
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
-import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.EventDispatcher;
 
 
 /**
- * Custom button which emulates a "WhilePressed" event
+ * Custom button which allows a "WhilePressed" event
  * @author Dylan
  *
  */
@@ -18,18 +17,27 @@ public class TrialButton extends Button
 	private TrialButton tb = this;
 	private EventDispatcher dispatcher = new EventDispatcher();
 	private long delay = 100; // Default delay
-	
+	private boolean WhilePressed = false;
 	public TrialButton(String string)
 	{
 		super.setText(string);
+		WhilePressed = true;
+	}
+	
+	public void setWhilePressed(boolean param)
+	{
+		WhilePressed = param;
 	}
 
 	@Override
 	public void pressed()
 	{    
 		super.pressed();
-		Thread t = new Thread(new pressedAction());
-		t.start();
+		if(WhilePressed)
+		{
+			Thread t = new Thread(new pressedAction());
+			t.start();
+		}
 	}
 	
 	/**

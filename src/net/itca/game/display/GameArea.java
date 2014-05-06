@@ -56,7 +56,7 @@ public class GameArea extends Form implements Observer
 		l.setDraggable(false);
 		l.setVisible(false);
 		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-		this.setBgImage(im);
+		this.getStyle().setBgImage(im);
 		this.addComponent(l);
 		this.setDraggable(false);
 		this.setScrollable(false);

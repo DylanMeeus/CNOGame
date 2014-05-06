@@ -2,9 +2,7 @@ package com.mycompany.myapp;
 
 import net.itca.game.display.MainMenu;
 
-import com.codename1.io.Log;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
+
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 

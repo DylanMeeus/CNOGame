@@ -42,11 +42,7 @@ public class EndWindow extends BaseWindow
 	
 	public EndWindow(int score)
 	{
-		// Setting a radial background with gradiant from white -> blue
-		//this.getStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
-		//this.getStyle().setBackgroundGradientStartColor(0x0000CC);
-		//this.getStyle().setBackgroundGradientEndColor(0x0000AA);
-		
+
 		
 		super();
 		

@@ -127,9 +127,6 @@ public class ScoreWindow extends BaseWindow
 		BorderLayout contentLayout = new BorderLayout();
 		contentLayout.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER);
 		content.setLayout(contentLayout);
-		Label gameOverlbl = new Label("GAME OVER");
-		gameOverlbl.getStyle().setFgColor(0xFF0000);
-		content.addComponent(contentLayout.NORTH,new Label("GAME OVER"));
 		content.addComponent(contentLayout.CENTER, new ScoreContainer());
 	}
 	

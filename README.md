@@ -51,3 +51,19 @@ Update 03/05/2014
 - Added JavaDoc
 - Minor code cleanup
 - Fixed powerup issue
+
+Update 06/05/2014
+
+- added new TIMED gamemode
+- added new gamemode window
+- added TrialButton to net.itca.components
+- changed difficulty
+- changed (deprecated) this.setBgImage() to this.getStyle().setBgImage()
+- enforced private visibility in game.java
+- Game.java now requires GameMode
+- improved spawn design (strategy)
+- improved general design
+- improved javadoc (more clarifying)
+- moved spawn logic to net.itca.game.core.spawner
+- removed superfluous net.itca.game.tryouts.TrialButton class
+- removed unused imports.

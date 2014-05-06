@@ -16,10 +16,10 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.GridLayout;
 
 /**
- * 
- * @author Dylan The main window with all game components, this class also
- *         listens to the game to find out when the game's over.
- */
+ * The main window with all game components, this class also
+ * listens to the game to find out when the game's over.
+ * @author Dylan 
+ **/
 public class GameWindow extends Form implements Observer
 {
 	private GameArea ga;
@@ -138,7 +138,7 @@ public class GameWindow extends Form implements Observer
 	}
 
 	/*
-	 * Everything undernearth this line is "tryout" code. Might break the game.
+	 * Everything underneath this line is "tryout" code. Might break the game.
 	 */
 	// Do not use PointerPressed == That's to register events on the buttons!
 	

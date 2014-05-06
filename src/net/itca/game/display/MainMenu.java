@@ -34,7 +34,7 @@ public class MainMenu extends Form
 		Resources r = Resources.open("/theme.res");
 		Image im = r.getImage("background.png");
 		this.getStyle().setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FIT);
-		this.setBgImage(im);
+		this.getStyle().setBgImage(im);
 		}
 		catch(Exception ex)
 		{
@@ -56,9 +56,8 @@ public class MainMenu extends Form
 
 			public void actionPerformed(ActionEvent evt)
 			{
-				Game game = new Game();
-				GameWindow gw = new GameWindow(game);
-				gw.show();
+				SelectModeWindow smw = new SelectModeWindow();
+				smw.show();
 			}
 			
 		});

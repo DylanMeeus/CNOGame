@@ -2,16 +2,11 @@ package net.itca.game.display;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
-import com.codename1.ui.Form;
-import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.GridLayout;
-import com.codename1.ui.plaf.Border;
-import com.codename1.ui.plaf.Style;
-import com.codename1.ui.util.Resources;
+
 
 /**
  * Displays the about section of the game
