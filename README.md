@@ -67,3 +67,10 @@ Update 06/05/2014
 - moved spawn logic to net.itca.game.core.spawner
 - removed superfluous net.itca.game.tryouts.TrialButton class
 - removed unused imports.
+
+Update 13/05/2014
+
+- Added touch suport
+- Improved code
+- Improved JavaDoc
+- Added new .xap file

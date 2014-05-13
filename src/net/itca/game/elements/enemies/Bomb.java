@@ -8,7 +8,7 @@ import com.codename1.ui.util.Resources;
 
 
 /**
- * 
+ * A bomb, this is the enemy in the game. Once the player gets hit by this, the game is over.
  * @author Dylan
  *
  */
@@ -19,7 +19,7 @@ public class Bomb extends MovingGameElement
 	Image im;
 	Point position;
 	Point velocity;
-	int value = -1; // Value for BOMB
+	int value = 0; // Value for BOMB
 	boolean isAlive;
 	
 	public Bomb(Point startPos, Point startVel)
@@ -50,11 +50,7 @@ public class Bomb extends MovingGameElement
 		return position;
 	}
 
-	@Override
-	public Point getVelocity()
-	{
-		return velocity;
-	}
+
 
 	@Override
 	public void move()

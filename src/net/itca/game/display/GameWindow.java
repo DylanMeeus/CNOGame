@@ -1,11 +1,15 @@
 package net.itca.game.display;
 
+import java.util.ArrayList;
+
 import net.itca.components.TrialButton;
 import net.itca.game.controllers.GameAreaController;
 import net.itca.game.core.Game;
 import net.itca.game.core.GameTimer;
 import net.itca.game.interfaces.Observer;
+import net.itca.game.tryouts.GameArea2;
 
+import com.codename1.io.Preferences;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
@@ -40,7 +44,10 @@ public class GameWindow extends Form implements Observer
 		setup();
 		this.setDraggable(false);
 
-		this.addComponent(b.SOUTH, content);
+		if(Preferences.get("touchinput","false").equals("false"))
+		{
+			this.addComponent(b.SOUTH, content);			
+		}
 
 		this.setScrollable(false);
 		content.setScrollable(false);
@@ -66,6 +73,7 @@ public class GameWindow extends Form implements Observer
 		content = new Container();
 		gameAreaController = new GameAreaController(game);
 		ga = new GameArea(gameAreaController);
+		GameArea2 ga2 = new GameArea2();
 		timer = new GameTimer();
 		timer.registerObserver(ga);
 		timer.registerObserver(game);
@@ -137,26 +145,26 @@ public class GameWindow extends Form implements Observer
 		}
 	}
 
-	/*
-	 * Everything underneath this line is "tryout" code. Might break the game.
-	 */
-	// Do not use PointerPressed == That's to register events on the buttons!
+
 	
-	public void pointerDragged(int x, int y)
-	{
-		System.out.println("This shouldn't do anything");
-	}
-	
+	ArrayList<Integer> xPos = new ArrayList<Integer>();
 	public void pointerDragged(int[] x, int[] y) 
 	{
-		System.out.println("This shouldn't do anything either");
-		if(x.length>1)
+		xPos.add(x[0]);
+		if(xPos.size()>=2)
 		{
-			if(x[0] > x[1])
+			if(xPos.get(xPos.size()-1) > xPos.get(xPos.size()-2))
 			{
-				gameAreaController.movePlayerRight();
+				game.getPlayer().moveRight();
 			}
+			else
+			{
+				game.getPlayer().moveLeft();
+			}
+			// We now remove the first element from the list, to preserve space
+			xPos.remove(0);
 		}
+		
 	}
 	
 }

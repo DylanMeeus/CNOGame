@@ -18,11 +18,7 @@ public abstract class MovingGameElement extends GameElement
 	@Override
 	public abstract Point getPosition();
 	
-	/**
-	 * Return the velocity with which the object moves during each update cycle.
-	 * @return
-	 */
-	public abstract Point getVelocity(); // Point so we can add sideways elements later
+
 	/**
 	 * Moves the object along with the set velocity
 	 */

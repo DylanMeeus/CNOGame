@@ -15,13 +15,13 @@ import net.itca.game.factories.GameElementFactory;
 import net.itca.game.interfaces.Observer;
 
 /**
- * Class for spawning objects ingame (To keep extra methods
- * ommited from the factory) This class also adds some "smarts" to the
+ * Class for spawning objects into the game (To keep extra methods
+ * omit from the factory) This class also adds some "smarts" to the
  * spawning system by use of SpawnBehaviours.
  * @author Dylan 
  */
 
-// Put this class in complete control of spawning?
+
 
 
 public class IngameSpawner implements Observer // Observe the gameTimer to take care of the spawning entirely.
@@ -34,7 +34,7 @@ public class IngameSpawner implements Observer // Observe the gameTimer to take 
 		spawnBehaviour = sb;
 	}
 
-	
+
 	public MovingGameElement spawn(int level)
 	{
 		 return spawnBehaviour.spawnElement(width,level);

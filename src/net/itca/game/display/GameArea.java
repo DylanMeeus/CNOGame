@@ -38,7 +38,10 @@ public class GameArea extends Form implements Observer
 	{
 		gameAreaController = gac;
 		Display display = Display.getInstance();
-		this.setSize(new Dimension(400,400)); // TODO: Dynamic dimensions!
+		int height = display.getDisplayHeight();
+		int width = display.getDisplayWidth();
+		System.out.println("height: " + height + " width: " + width);
+		this.setSize(new Dimension(width,height)); // TODO: Dynamic dimensions!
 		gameAreaController.createPlayer(new Point(this.getWidth()/2,this.getHeight()));
 		gameAreaController.setScreenDimensions(this.getWidth(), this.getHeight());
 		try

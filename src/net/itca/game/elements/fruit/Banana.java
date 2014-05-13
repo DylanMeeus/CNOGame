@@ -6,20 +6,15 @@ import com.codename1.ui.Image;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.util.Resources;
 
-/**
- * 
- * @author Dylan
- *
- */
 public class Banana extends MovingGameElement
 {
 
-	private Resources r;
-	private Image im;
-	private Point position;
-	private Point velocity;
-	private int value = 20;
-	private boolean isAlive;
+	Resources r;
+	Image im;
+	Point position;
+	Point velocity;
+	int value = 20;
+	boolean isAlive;
 	
 	public Banana(Point startPosition)
 	{
@@ -48,11 +43,6 @@ public class Banana extends MovingGameElement
 		return position;
 	}
 
-	@Override
-	public Point getVelocity()
-	{
-		return velocity;
-	}
 
 	@Override
 	public void move()

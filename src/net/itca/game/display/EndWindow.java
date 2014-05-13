@@ -6,9 +6,12 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.itca.game.core.InnerActive;
+import net.itca.game.display.containers.ScoreContainer;
 import net.itca.game.elements.Cloud;
 import net.itca.game.factories.GameElementFactory;
 
+import com.codename1.components.Ads;
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
@@ -137,6 +140,19 @@ public class EndWindow extends BaseWindow
 		Label gameOverlbl = new Label("GAME OVER");
 		gameOverlbl.getStyle().setFgColor(0xFF0000);
 		content.addComponent(contentLayout.NORTH,new Label("GAME OVER"));
+		content.addComponent(contentLayout.CENTER,new ScoreContainer());
+		
+		
+		try
+		{
+			InnerActive ia = new InnerActive();
+			this.addComponent(BorderLayout.SOUTH,ia);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace(); 
+		}
+		
 	}
 	
 	/**

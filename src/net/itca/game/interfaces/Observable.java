@@ -1,5 +1,10 @@
 package net.itca.game.interfaces;
 
+/**
+ * Interface defining a class as Observable in the Observer-Pattern.
+ * @author Dylan
+ *
+ */
 public interface Observable
 {
 	/**

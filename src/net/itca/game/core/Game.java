@@ -35,7 +35,7 @@ public class Game implements Observer, Observable
 	private int gaHeight; // gameArea height
 	private IngameSpawner spawner;
 	private boolean gameOver = false;
-	private boolean shielded; // Indicates wether or not the player is protected
+	private boolean shielded; // Indicates whether or not the player is protected
 								// by a shield.
 	private GameMode gameMode;
 
@@ -124,7 +124,7 @@ public class Game implements Observer, Observable
 	/**
 	 * Move the player in the given direction.
 	 * 
-	 * @param int
+	 * @param int 
 	 */
 	public void movePlayer(int direction) // doesn't use the player's setters! :)
 	{
@@ -163,7 +163,7 @@ public class Game implements Observer, Observable
 	 * Updates the game. Does one step in 'game'time, all objects change their
 	 * position according to their velocity and several checks occur for
 	 * collision detection and endgame. In addition, this method also launches
-	 * the "Memory Cleaner", to delete objects whom are dead.
+	 * the "Memory Cleaner", to delete objects whom are dead (isAlive==false).
 	 */
 	public void update()
 	{
@@ -236,9 +236,9 @@ public class Game implements Observer, Observable
 	}
 
 	/**
-	 * Method for ending the game due to beign hit by a bomb. Stops the timer
+	 * Method for ending the game due to being hit by a bomb. Stops the timer
 	 * for updating the game, and displays the endwindow. Also makes sure
-	 * everything is garbage-collectable
+	 * everything is garbage-collectible
 	 */
 	public void endGameByBomb()
 	{
@@ -246,11 +246,13 @@ public class Game implements Observer, Observable
 		notifyObservers();
 	}
 	
+	/**
+	 * Changes the frequency with which spawns occur. Lower spawnCycles = Higher frequency, meaning a higher dificulty.
+	 * @param level
+	 */
 	private void spawnCycleChange(int level)
 	{
 		switch (level)
-		// Increase spawnSpeed + bombVelcity (makes the game
-		// harder)
 		{
 		case 1:
 			spawnCycles = 140;
@@ -376,5 +378,4 @@ public class Game implements Observer, Observable
 			}
 		}
 	}
-
 }

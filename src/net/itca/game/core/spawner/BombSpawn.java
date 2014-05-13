@@ -10,7 +10,7 @@ import net.itca.game.factories.GameElementFactory;
 
 
 /**
- * Only spawns bombs.
+ * Only spawns bombs. Bombs spawn at a random position between 0 and maxwidth. The level determines the velocity of the bombs.
  * @author Dylan
  *
  */

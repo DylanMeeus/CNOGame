@@ -63,13 +63,13 @@ public class MainMenu extends Form
 		});
 		content.addComponent(Start);
 		
-		Info = new Button("Game info");
+		Info = new Button("Settings");
 		Info.addActionListener(new ActionListener()
 		{
 
 			public void actionPerformed(ActionEvent evt)
 			{
-				InfoWindow iw = new InfoWindow();
+				SettingsWindow iw = new SettingsWindow();
 				iw.show();
 			}
 			

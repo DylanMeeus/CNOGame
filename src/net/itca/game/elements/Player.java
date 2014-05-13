@@ -67,5 +67,23 @@ public class Player extends GameElement
 	{
 		position.setX(position.getX()+10);
 	}
+	
+	/**
+	 * Move the player to the left with the set amount
+	 * @param amount
+	 */
+	public void moveLeft(int amount)
+	{
+		position.setX(position.getX()-amount);
+	}
+	
+	/**
+	 * Move the player to the right with the set amount
+	 * @param amount
+	 */
+	public void moveRight(int amount)
+	{
+		position.setX(position.getX()+amount);
+	}
 
 }

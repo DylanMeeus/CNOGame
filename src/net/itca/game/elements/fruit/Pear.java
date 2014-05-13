@@ -6,25 +6,22 @@ import com.codename1.ui.Image;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.util.Resources;
 
-/**
- * 
- * @author Dylan
- *
- */
 public class Pear extends MovingGameElement
 {
-	private Resources r;
-	private Image im;
-	private Point position;
-	private Point velocity;
-	private int value = 15;
-	private boolean isAlive;
+
+
+	Resources r;
+	Image im;
+	Point position;
+	Point velocity;
+	int value = 15;
+	boolean isAlive;
 	
 	public Pear(Point startPosition)
 	{
 		try
 		{
-			r = Resources.open("/theme.res");
+		r = Resources.open("/theme.res");
 		}
 		catch(Exception ex)
 		{
@@ -48,11 +45,7 @@ public class Pear extends MovingGameElement
 		return position;
 	}
 
-	@Override
-	public Point getVelocity()
-	{
-		return velocity;
-	}
+
 
 	@Override
 	public void move()

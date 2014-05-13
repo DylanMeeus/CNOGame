@@ -52,11 +52,7 @@ public class Cloud extends MovingGameElement
 		return position;
 	}
 
-	@Override
-	public Point getVelocity()
-	{
-		return velocity;
-	}
+	
 
 	@Override
 	public void move()

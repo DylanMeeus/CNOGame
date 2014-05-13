@@ -5,9 +5,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.itca.game.display.containers.ScoreContainer;
 import net.itca.game.elements.Cloud;
 import net.itca.game.factories.GameElementFactory;
-import net.itca.game.tryouts.ScoreContainer;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;

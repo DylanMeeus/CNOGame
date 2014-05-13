@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.GridLayout;
+import com.codename1.ui.plaf.Border;
 
 public class SelectModeWindow extends BaseWindow
 {
@@ -43,9 +44,11 @@ public class SelectModeWindow extends BaseWindow
 		Arcade = new Button("ARCADE");
 		Timed = new Button("TIMED");
 		Arcade.getStyle().setFgColor(0xFF0000);
+		Arcade.getStyle().setBorder(Border.createLineBorder(1,0xFF0000));
 		Arcade.addActionListener(new ModeListener());
 		Timed.addActionListener(new ModeListener());
 		Timed.getStyle().setFgColor(0xFF0000);
+		Timed.getStyle().setBorder(Border.createLineBorder(1,0xFF0000));
 		content.addComponent(Arcade);
 		content.addComponent(Timed);
 	}
